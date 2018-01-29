@@ -45,6 +45,10 @@ module ArrayHasher
         opts ||= {}
         next if name.nil?
 
+        if name == :date
+          type = make_proc_for_date(opts[:format]) if opts[:format]
+        end
+
         range = opts[:range] || index
         val = range.is_a?(Array) ? arr.slice(*range) : arr[range]
 
@@ -54,6 +58,24 @@ module ArrayHasher
           block.call(val)
         else
           val
+        end
+      end
+    end
+
+    private
+
+    # format:
+    #  'm-y': Sep-16
+    def make_proc_for_date(format)
+      case format
+      when 'm-y'
+        Proc.new do |v|
+          month, year = v.split('-')
+          if year.length == 2
+            year = DateTime.now.year.to_s[0..1] + year
+          end
+          date = "#{month} #{year}"
+          Date.strptime(date, "%b %Y")
         end
       end
     end

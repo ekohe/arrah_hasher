@@ -23,6 +23,11 @@ RSpec.describe ArrayHasher do
       expect(ArrayHasher.parse_format(['name:int', 'tags:string:{"a": [1,2]}'])).to \
         eql([[:name, :int, {}], [:tags, :string, 'a' => [1, 2]]])
     end
+
+    it 'should parse custom opts' do
+      expect(ArrayHasher.parse_format(['name:int', "date:time:(format:m-y)"])).to \
+        eql([[:name, :int, {}], [:date, :time, 'format' => 'm-y']])
+    end
   end
 
   describe '.csv_each' do

@@ -1,4 +1,3 @@
-
 RSpec.describe ArrayHasher::Formatter do
   let(:subject) do
     ArrayHasher::Formatter.new([
@@ -39,6 +38,11 @@ RSpec.describe ArrayHasher::Formatter do
     it 'should ignore colum if its name is nil' do
       f = ArrayHasher::Formatter.new([[], [:b, :int]])
       expect(f.parse(['123', '123'])).to eql(b: 123)
+    end
+
+    it 'should use specified date format' do
+      f = ArrayHasher::Formatter.new([[], [:date, :time, 'format' => 'm-y']])
+      expect(f.parse(['123', 'Sep-16'])).to eql(date: Date.strptime('Sep 2016', "%b %Y"))
     end
 
     it 'should use specified range as val' do
