@@ -42,7 +42,7 @@ RSpec.describe ArrayHasher::Formatter do
 
     it 'should use specified date format' do
       f = ArrayHasher::Formatter.new([[], [:date, :time, 'format' => 'm-y']])
-      expect(f.parse(['123', 'Sep-16'])).to eql(date: Date.strptime('Sep 2016', "%b %Y"))
+      expect(f.parse(['123', 'Sep-16'])).to eql(date: Date.strptime('Sep 2016', "%b %Y").to_time)
     end
 
     it 'should use specified range as val' do

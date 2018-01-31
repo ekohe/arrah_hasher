@@ -75,7 +75,7 @@ module ArrayHasher
             year = DateTime.now.year.to_s[0..1] + year
           end
           date = "#{month} #{year}"
-          Date.strptime(date, "%b %Y")
+          Date.strptime(date, "%b %Y").to_time
         end
       end
     end
